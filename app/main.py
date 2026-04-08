@@ -164,11 +164,11 @@ def openenv_state():
 # Server entry point (used by [project.scripts] server = "app.main:serve")
 # ---------------------------------------------------------------------------
 
-def serve():
+def main():
     """Start the uvicorn server. Called by the `server` console script."""
     import uvicorn
     uvicorn.run("app.main:app", host="0.0.0.0", port=7860, workers=1)
 
 
 if __name__ == "__main__":
-    serve()
+    main()
