@@ -158,3 +158,17 @@ def get_state():
 def openenv_state():
     """OpenEnv checker alias for GET /state."""
     return _handle_state()
+
+
+# ---------------------------------------------------------------------------
+# Server entry point (used by [project.scripts] server = "app.main:serve")
+# ---------------------------------------------------------------------------
+
+def serve():
+    """Start the uvicorn server. Called by the `server` console script."""
+    import uvicorn
+    uvicorn.run("app.main:app", host="0.0.0.0", port=7860, workers=1)
+
+
+if __name__ == "__main__":
+    serve()
