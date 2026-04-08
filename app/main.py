@@ -50,10 +50,25 @@ class HealthResponse(BaseModel):
 # Endpoints
 # ---------------------------------------------------------------------------
 
+@app.get("/", tags=["utility"])
+def root():
+    """Landing page — confirms the server is up and shows available endpoints."""
+    return {
+        "name": "Invoice Validation Environment",
+        "status": "running",
+        "version": "1.0.0",
+        "docs": "/docs",
+        "health": "/health",
+        "endpoints": ["/reset", "/step", "/state"],
+        "usage": "POST /reset with {\"difficulty\": \"easy\"} to start an episode",
+    }
+
+
 @app.get("/health", response_model=HealthResponse, tags=["utility"])
 def health_check():
-    """Liveness probe used by Docker health checks and HF Spaces."""
+    """Liveness probe used by Docker and HF Spaces."""
     return HealthResponse(status="ok")
+
 
 
 @app.post("/reset", response_model=InvoiceObservation, tags=["environment"])
