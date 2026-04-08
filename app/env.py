@@ -107,14 +107,12 @@ class InvoiceValidationEnv:
             if state.approval_status == ApprovalStatus.approved:
                 return False, "Already marked valid."
             state.approval_status = ApprovalStatus.approved
-            state.done = True
             return True, "Invoice approved."
 
         elif atype == ActionType.mark_invalid:
             if state.approval_status == ApprovalStatus.rejected:
                 return False, "Already marked invalid."
             state.approval_status = ApprovalStatus.rejected
-            state.done = True
             return True, "Invoice rejected."
 
         elif atype == ActionType.flag_duplicate:
@@ -127,7 +125,6 @@ class InvoiceValidationEnv:
             if state.approval_status == ApprovalStatus.on_hold:
                 return False, "Already on hold."
             state.approval_status = ApprovalStatus.on_hold
-            state.done = True
             return True, "On hold — requested missing info from vendor."
 
         elif atype == ActionType.finalize_review:

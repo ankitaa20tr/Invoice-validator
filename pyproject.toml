@@ -33,7 +33,7 @@ dependencies = [
 
 [project.scripts]
 server = "app.main:main"
-invoice-inference = "inference:main"
+invoice-inference = "inference:run"
 
 [tool.setuptools.packages.find]
 where = ["."]
