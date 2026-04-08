@@ -1,13 +1,19 @@
 """
 server/app.py — Multi-mode deployment entry point required by OpenEnv.
 
-This module re-exports the FastAPI `app` instance and provides a `main()`
-function so the environment can be launched in multiple modes:
-  - Docker:  CMD in Dockerfile starts uvicorn directly
-  - pip:     `server` console script calls main() from pyproject.toml
-  - import:  other tools can do `from server.app import app`
+Provides:
+  - `app`    : the FastAPI application instance
+  - `main()` : callable server launcher (used by pyproject.toml [project.scripts])
 """
 
-from app.main import app, main
+import uvicorn
+from app.main import app  # re-export FastAPI app
 
-__all__ = ["app", "main"]
+
+def main():
+    """Launch the uvicorn server. Entry point for multi-mode deployment."""
+    uvicorn.run("app.main:app", host="0.0.0.0", port=7860, workers=1)
+
+
+if __name__ == "__main__":
+    main()
