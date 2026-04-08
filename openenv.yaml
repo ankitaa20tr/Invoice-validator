@@ -13,6 +13,8 @@ endpoints:
   step:   POST /openenv/step
   state:  GET  /openenv/state
   health: GET  /openenv/health
+  tasks:  GET  /openenv/tasks
+  grade:  POST /openenv/tasks/{task_id}/grade
 
 # Model references — these map to the Pydantic classes in app/models.py
 observation_model: InvoiceObservation
