@@ -1,3 +1,12 @@
+---
+title: Invoice Validation Env
+emoji: 📄
+colorFrom: blue
+colorTo: green
+sdk: docker
+pinned: false
+---
+
 # Invoice Validation Environment
 
 An **OpenEnv-compatible reinforcement learning environment** that puts an AI agent in the role of a finance team reviewer. The agent receives invoice data, detects fraud signals and arithmetic errors, and decides whether to approve, reject, flag, or hold the invoice for more information.
