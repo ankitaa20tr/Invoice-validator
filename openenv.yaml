@@ -1,0 +1,51 @@
+name: invoice-validation-env
+version: "1.0.0"
+description: >
+  An OpenEnv-compatible reinforcement learning environment that simulates
+  a finance team reviewing invoices. The agent must detect fraud signals,
+  arithmetic errors, and missing fields, then recommend an appropriate action.
+
+entrypoint: "uvicorn app.main:app --host 0.0.0.0 --port 7860"
+
+# HTTP endpoints
+endpoints:
+  reset: POST /reset
+  step:  POST /step
+  state: GET  /state
+  health: GET /health
+
+# Model references — these map to the Pydantic classes in app/models.py
+observation_model: InvoiceObservation
+action_model:      InvoiceAction
+reward_model:      InvoiceReward
+
+# Task catalogue
+tasks:
+  - id: easy
+    description: "Invoice with a single missing GST number"
+    max_steps: 20
+    target_score: 0.8
+
+  - id: medium
+    description: "Invoice with an incorrect total calculation"
+    max_steps: 20
+    target_score: 0.75
+
+  - id: hard
+    description: "Invoice with five overlapping issues including duplication"
+    max_steps: 20
+    target_score: 0.7
+
+metadata:
+  domain: finance
+  language: python
+  framework: fastapi
+  llm_provider: openai-compatible
+  runtime:
+    vcpu: 2
+    memory_gb: 8
+    max_duration_minutes: 20
+  deployment:
+    docker: true
+    huggingface_spaces: true
+    port: 7860

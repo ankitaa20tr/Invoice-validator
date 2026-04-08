@@ -1,0 +1,31 @@
+# Python cache — never commit these
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Your actual secrets — .env.example is safe to commit, .env is NOT
+.env
+
+# Editor and OS noise
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Build / dist artifacts
+dist/
+build/
+*.egg-info/
+
+# Test / coverage output
+.coverage
+htmlcov/
+.pytest_cache/
