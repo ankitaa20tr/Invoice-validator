@@ -27,16 +27,19 @@ tasks:
     description: "Invoice with a single missing GST number"
     max_steps: 20
     target_score: 0.8
+    grader: "app.grader:grade_easy"
 
   - id: medium
     description: "Invoice with an incorrect total calculation"
     max_steps: 20
     target_score: 0.75
+    grader: "app.grader:grade_medium"
 
   - id: hard
     description: "Invoice with five overlapping issues including duplication"
     max_steps: 20
     target_score: 0.7
+    grader: "app.grader:grade_hard"
 
 metadata:
   domain: finance

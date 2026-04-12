@@ -101,3 +101,62 @@ def grade_submission(
     total = sum(_ISSUE_REWARDS.get(i, 0.0) for i in expected_issues if i in detected_issues)
     total += _CORRECT_ACTION_BONUS if final_action == expected_action else _WRONG_ACTION_PENALTY
     return round(max(0.0, min(1.0, total)), 4)
+
+
+# ---------------------------------------------------------------------------
+# Per-task grader entry points — referenced by openenv.yaml grader: fields.
+# These are discovered and called by the OpenEnv submission checker.
+# ---------------------------------------------------------------------------
+
+def grade_easy(
+    detected_issues: List[str],
+    final_action: str,
+    steps_taken: int = 0,
+    **kwargs,
+) -> float:
+    """Grader for the 'easy' task (single missing GST number)."""
+    return grade_submission(
+        detected_issues=detected_issues,
+        expected_issues=["missing_gst_number"],
+        final_action=final_action,
+        expected_action="request_missing_info",
+        steps_taken=steps_taken,
+    )
+
+
+def grade_medium(
+    detected_issues: List[str],
+    final_action: str,
+    steps_taken: int = 0,
+    **kwargs,
+) -> float:
+    """Grader for the 'medium' task (incorrect total calculation)."""
+    return grade_submission(
+        detected_issues=detected_issues,
+        expected_issues=["wrong_total_calculation"],
+        final_action=final_action,
+        expected_action="mark_invalid",
+        steps_taken=steps_taken,
+    )
+
+
+def grade_hard(
+    detected_issues: List[str],
+    final_action: str,
+    steps_taken: int = 0,
+    **kwargs,
+) -> float:
+    """Grader for the 'hard' task (five overlapping issues)."""
+    return grade_submission(
+        detected_issues=detected_issues,
+        expected_issues=[
+            "missing_vendor_name",
+            "missing_gst_number",
+            "wrong_total_calculation",
+            "duplicate_invoice",
+            "missing_receipt",
+        ],
+        final_action=final_action,
+        expected_action="mark_invalid",
+        steps_taken=steps_taken,
+    )
